@@ -1,43 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Lean.Touch;
+using Lean.Common;
 
 public class GameController : MonoBehaviour
 {
-    private Selectable _currentSelectable;
+    public static GameController instance = null;
+
     [SerializeField]
-    private LayerMask _groundMask;
-    void Start()
+    private LeanPlane _plane;
+    [SerializeField]
+    private Creature[] _creaturePrefabs;
+    void Awake()
     {
+        if(instance==null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
+        }
         
     }
     void Update()
     {
-        Ray ray;
-        RaycastHit raycastHit;
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin,ray.direction*100f);
-        if (Physics.Raycast(ray, out raycastHit))
-        {
-            Selectable obj;
-            obj = raycastHit.transform.GetComponent<Selectable>();
-            if (obj != null)
-            {
-                _currentSelectable = obj;
-            }
-            else
-            {
-                _currentSelectable = null;
-            }
-        }
-        else
-        {       
-                _currentSelectable = null;
-        }
-        if (Input.GetMouseButton(0)&&_currentSelectable!=null)
-        {
-            Physics.Raycast(ray,out raycastHit, Mathf.Infinity,_groundMask);
-            _currentSelectable.transform.position = raycastHit.point;
-        }
+       
+    }
+
+    public Creature GetCreaturePrefab(int level)
+    {
+        return _creaturePrefabs[level];
+    }
+
+    public Vector3 GetClosestPos(Vector3 pos)
+    {
+        return _plane.GetClosest(pos);
+    }
+
+    public Vector2 GetGridSnap()
+    {
+        return new Vector2(_plane.SnapX, _plane.SnapY);
     }
 }
