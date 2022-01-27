@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: 735761661751892399}
   - component: {fileID: 735761661751892393}
   - component: {fileID: 735761661751892398}
-  - component: {fileID: 735761661751892395}
   - component: {fileID: 735761661751892392}
+  - component: {fileID: 4798176523904357923}
   m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
@@ -237,19 +237,6 @@ MonoBehaviour:
   axis: 2
   minimum: -5
   maximum: 5
---- !u!114 &735761661751892395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735761661751892407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0698e1eb75ed76549adeea1375f6e8d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level: 1
 --- !u!54 &735761661751892392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -266,3 +253,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4798176523904357923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735761661751892407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5efbd4f5926cc794690ac1f4cb5a9aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  hp: 100
+  damage: 30
+  speed: 5
+  attackDistance: 1

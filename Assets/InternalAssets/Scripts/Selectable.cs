@@ -49,12 +49,13 @@ public class Selectable : MonoBehaviour
         {
             Creature creature1 = hits[0].transform.GetComponent<Creature>();
             Creature creature2 = hits[1].transform.GetComponent<Creature>();
-            if (creature1.level != creature2.level)
+            if (creature1.level != creature2.level||creature1.enemyOrFriendly!=creature2.enemyOrFriendly)
                 transform.position = _posBeforeDrag;
             else
             {
-                Creature newCreature = GameController.instance.GetCreaturePrefab(_creature.level);
-                Instantiate(newCreature, pos, Quaternion.identity);
+                Creature creaturePrefab = GameController.instance.GetCreaturePrefab(_creature.level);
+                Creature newCreature = Instantiate(creaturePrefab, pos, Quaternion.identity);
+                GameController.instance.MergeCreatures(newCreature, creature1, creature2);
                 if (creature1 == _creature)
                 {
                     Destroy(creature2.gameObject);
