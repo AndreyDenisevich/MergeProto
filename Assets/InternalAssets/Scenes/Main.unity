@@ -289,14 +289,7 @@ MonoBehaviour:
   _rangeCreaturePrefabs:
   - {fileID: 4741109790512826877, guid: 65d2c64acb7aa5448907a514b6839112, type: 3}
   - {fileID: 8290210817391529889, guid: 70f876abae6299a488d04ed32eae0386, type: 3}
-  _friendlyCreatures:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _friendlyCreatures: []
   _enemyCreatures:
   - {fileID: 4798176524058336971}
   - {fileID: 1218993360}
