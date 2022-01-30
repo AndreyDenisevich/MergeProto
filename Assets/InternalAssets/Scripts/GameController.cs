@@ -10,8 +10,11 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private LeanPlane _plane;
+
     [SerializeField]
-    private Creature[] _creaturePrefabs;
+    private Creature[] _meleeCreaturePrefabs;
+    [SerializeField]
+    private Creature[] _rangeCreaturePrefabs;
 
     [SerializeField]
     private List<Creature> _friendlyCreatures;
@@ -23,7 +26,7 @@ public class GameController : MonoBehaviour
     private bool _isBattleStarted = false;
     void Awake()
     {
-        if(instance==null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(this);
@@ -32,14 +35,22 @@ public class GameController : MonoBehaviour
         {
             Destroy(this);
         }
-        
+
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)&&!_isBattleStarted)
+        if (Input.GetKeyDown(KeyCode.Space) && !_isBattleStarted)
         {
             _isBattleStarted = true;
             ActivateCreatures();
+        }
+        if (Input.GetKeyDown(KeyCode.M) && !_isBattleStarted)
+        {
+            SpawnMelee();
+        }
+        if (Input.GetKeyDown(KeyCode.R) && !_isBattleStarted)
+        {
+            SpawnRange();
         }
         if (_isBattleStarted)
         {
@@ -71,6 +82,53 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void SpawnMelee()
+    {
+        Vector3 freePos;
+        if(FindFreePosition(out freePos))
+        {
+            Creature creature = Instantiate(_meleeCreaturePrefabs[0], freePos, Quaternion.identity);
+            _friendlyCreatures.Add(creature);
+        }
+    }
+
+    private void SpawnRange()
+    {
+        Vector3 freePos;
+        if (FindFreePosition(out freePos))
+        {
+            Creature creature = Instantiate(_rangeCreaturePrefabs[0], freePos, Quaternion.identity);
+            _friendlyCreatures.Add(creature);
+        }
+    }
+
+    private bool FindFreePosition(out Vector3 pos)
+    {
+        bool isAnyFree = false;
+        pos = Vector3.zero;
+        for (float x = _plane.MinX; x <= _plane.MaxX; x += _plane.SnapX)
+        {
+            for (float z = _plane.MinY; z <= _plane.MaxY; z += _plane.SnapY) 
+            {
+                if(CheckPosition(new Vector3(x,1f,z)))
+                {
+                    pos = new Vector3(x, 1f, z);
+                    isAnyFree = true;
+                    break;
+                }
+            }
+            if (isAnyFree)
+                break;
+        }
+        return isAnyFree;
+    }
+
+    private bool CheckPosition(Vector3 pos)
+    {
+        RaycastHit[] hits = Physics.BoxCastAll(pos, new Vector3(_plane.SnapX / 2f, 0f, _plane.SnapY / 2f), Vector3.forward, Quaternion.Euler(0, 0, 0), 0);
+        return hits.Length == 0;
+    }
+
     private void ActivateCreatures()
     {
         foreach(Creature creature in _enemyCreatures)
@@ -90,9 +148,14 @@ public class GameController : MonoBehaviour
         _friendlyCreatures.Add(newCreature);
     }
 
-    public Creature GetCreaturePrefab(int level)
+    public Creature GetMeleeCreaturePrefab(int level)
     {
-        return _creaturePrefabs[level];
+        return _meleeCreaturePrefabs[level];
+    }
+
+    public Creature GetRangeCreaturePrefab(int level)
+    {
+        return _rangeCreaturePrefabs[level];
     }
 
     public Vector3 GetClosestPos(Vector3 pos)

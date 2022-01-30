@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 8351363968788029749}
   - component: {fileID: 9042745317366192015}
   m_Layer: 7
-  m_Name: Cube
+  m_Name: Lvl2Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,9 +249,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 2
-  hp: 200
-  damage: 50
+  hp: 300
+  damage: 80
+  attackDelay: 2
   enemyOrFriendly: 0
   speed: 5
   attackDistance: 1
-  attackDelay: 2

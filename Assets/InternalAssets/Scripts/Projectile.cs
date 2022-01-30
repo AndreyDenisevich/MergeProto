@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour
     {
         if (_enemy != null)
             transform.forward = (_enemy.transform.position - transform.position).normalized;
+        else Destroy(this.gameObject);
         transform.Translate(0, 0, _speed * Time.deltaTime);
     }
 

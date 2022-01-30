@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
-    public enum EnemyOrFriendly { friendly,enemy};
+    public enum EnemyOrFriendly { friendly,enemy}
+    public enum MeleeOrRange { melee,range}
     public int level = 1;
     public int hp = 100;
     public int damage = 30;
     public float attackDelay = 2f;
     public EnemyOrFriendly enemyOrFriendly;
+    public MeleeOrRange meleeOrRange;
 
     protected float elapsedtimeFromAttack = 0f;
     protected Creature _closestEnemy = null;
