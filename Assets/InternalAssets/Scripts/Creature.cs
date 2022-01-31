@@ -31,6 +31,9 @@ public class Creature : MonoBehaviour
     protected void SetForwardToEnemy()
     {
         transform.forward = (_closestEnemy.transform.position - transform.position).normalized;
+        //float angle = Vector3.Angle(transform.forward, enemyForward); 
+        //StopAllCoroutines();
+        //StartCoroutine(SetForward(angle));
     }
 
     protected bool CanAttack()
@@ -40,5 +43,19 @@ public class Creature : MonoBehaviour
     protected bool HaveEnemy()
     {
         return _closestEnemy != null;
+    }
+    private IEnumerator SetForward(float angle)
+    {
+        float progress = 0f, elapsedTime = 0f, duration = 1f;
+        Quaternion startRot = transform.rotation;
+        Quaternion endRot = Quaternion.Euler(startRot.eulerAngles.x, startRot.eulerAngles.y + angle, startRot.eulerAngles.z);
+        while (progress <= 1f)
+        {
+            transform.rotation = Quaternion.Lerp(startRot, endRot, progress);
+            elapsedTime += Time.unscaledDeltaTime;
+            progress = elapsedTime / duration;
+            yield return null;
+        }
+        transform.rotation = endRot;
     }
 }

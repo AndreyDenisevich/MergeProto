@@ -24,6 +24,12 @@ public class GameController : MonoBehaviour
     private List<Creature> _creaturesToDestroy = new List<Creature>();
 
     private bool _isBattleStarted = false;
+
+    private int _coinsCount = 700;
+    [SerializeField]
+    private int _meleeCost = 100;
+    [SerializeField]
+    private int _rangeCost = 100;
     void Awake()
     {
         if (instance == null)
@@ -37,21 +43,14 @@ public class GameController : MonoBehaviour
         }
 
     }
+
+    public void StartFight()
+    {
+        _isBattleStarted = true;
+        ActivateCreatures();
+    }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_isBattleStarted)
-        {
-            _isBattleStarted = true;
-            ActivateCreatures();
-        }
-        if (Input.GetKeyDown(KeyCode.M) && !_isBattleStarted)
-        {
-            SpawnMelee();
-        }
-        if (Input.GetKeyDown(KeyCode.R) && !_isBattleStarted)
-        {
-            SpawnRange();
-        }
         if (_isBattleStarted)
         {
             if (_enemyCreatures.Count > 0)
@@ -82,23 +81,33 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void SpawnMelee()
+    public void SpawnMelee()
     {
-        Vector3 freePos;
-        if(FindFreePosition(out freePos))
+        if (_coinsCount >= _meleeCost)
         {
-            Creature creature = Instantiate(_meleeCreaturePrefabs[0], freePos, Quaternion.identity);
-            _friendlyCreatures.Add(creature);
+            Vector3 freePos;
+            if (FindFreePosition(out freePos))
+            {
+                Creature creature = Instantiate(_meleeCreaturePrefabs[0], freePos, Quaternion.identity);
+                _friendlyCreatures.Add(creature);
+            }
+            _coinsCount -= _meleeCost;
+            _meleeCost += 10;
         }
     }
 
-    private void SpawnRange()
+    public void SpawnRange()
     {
-        Vector3 freePos;
-        if (FindFreePosition(out freePos))
+        if (_coinsCount >= _rangeCost)
         {
-            Creature creature = Instantiate(_rangeCreaturePrefabs[0], freePos, Quaternion.identity);
-            _friendlyCreatures.Add(creature);
+            Vector3 freePos;
+            if (FindFreePosition(out freePos))
+            {
+                Creature creature = Instantiate(_rangeCreaturePrefabs[0], freePos, Quaternion.identity);
+                _friendlyCreatures.Add(creature);
+            }
+            _coinsCount -= _rangeCost;
+            _rangeCost += 10;
         }
     }
 
@@ -193,5 +202,27 @@ public class GameController : MonoBehaviour
             }
         }
         return closestCreature;
+    }
+
+    public int coins
+    {
+        get
+        {
+            return _coinsCount;
+        }
+    }
+    public int meleeCost
+    {
+        get
+        {
+            return _meleeCost;
+        }
+    }
+    public int rangeCost
+    {
+        get
+        {
+            return _rangeCost;
+        }
     }
 }
