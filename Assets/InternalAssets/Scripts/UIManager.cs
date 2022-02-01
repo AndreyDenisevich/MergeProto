@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance = null;
+
+    [SerializeField]
+    private TextMeshProUGUI _finalText;
     [SerializeField]
     private Text _coinsCount;
     [SerializeField]
@@ -18,11 +23,32 @@ public class UIManager : MonoBehaviour
     private Button _startFightButton;
     void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
+        }
         UpdateCoins();
     }
     void Update()
     {
-        
+
+    }
+
+    public void Win()
+    {
+        _finalText.gameObject.SetActive(true);
+        _finalText.text = "You win!";
+    }
+
+    public void Lose()
+    {
+        _finalText.gameObject.SetActive(true);
+        _finalText.text = "You lose!";
     }
     public void UpdateCoins()
     {

@@ -17,5 +17,6 @@ public class HPBar : MonoBehaviour
     void Update()
     {
         _hpBar.value = (float)_creature.hp / (float)startHp;
+        //transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 }

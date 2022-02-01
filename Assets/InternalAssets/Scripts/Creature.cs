@@ -30,7 +30,7 @@ public class Creature : MonoBehaviour
 
     protected void SetForwardToEnemy()
     {
-        transform.forward = (_closestEnemy.transform.position - transform.position).normalized;
+        transform.forward = Vector3.Lerp(transform.forward, (_closestEnemy.transform.position - transform.position).normalized, 0.25f);
         //float angle = Vector3.Angle(transform.forward, enemyForward); 
         //StopAllCoroutines();
         //StartCoroutine(SetForward(angle));

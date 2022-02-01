@@ -16,9 +16,9 @@ public class MeleeCreature : Creature
         else
         { 
             float dist = Vector3.Distance(transform.position, _closestEnemy.transform.position);
+            SetForwardToEnemy();
             if (dist > attackDistance)
             {
-                SetForwardToEnemy();
                 transform.Translate(0, 0, speed * Time.deltaTime);
             }
             else

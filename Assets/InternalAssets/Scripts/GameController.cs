@@ -59,6 +59,8 @@ public class GameController : MonoBehaviour
                     if (creature.hp <= 0)
                         _creaturesToDestroy.Add(creature);
                 }
+            else
+                UIManager.instance.Win();
             foreach (Creature creature in _creaturesToDestroy)
             {
                 Destroy(creature.gameObject);
@@ -72,6 +74,8 @@ public class GameController : MonoBehaviour
                     if (creature.hp <= 0)
                         _creaturesToDestroy.Add(creature);
                 }
+            else
+                UIManager.instance.Lose();
             foreach (Creature creature in _creaturesToDestroy)
             {
                 Destroy(creature.gameObject);
