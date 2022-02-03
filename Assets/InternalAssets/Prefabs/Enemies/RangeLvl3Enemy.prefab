@@ -642,8 +642,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 3
   hp: 200
-  damage: 200
-  attackDelay: 2
+  damage: 60
+  attackDelay: 1.2
   enemyOrFriendly: 1
   meleeOrRange: 1
   _bloodParticles: {fileID: 5811190542859522806}
