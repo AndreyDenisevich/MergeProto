@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
 
     private bool _isBattleStarted = false;
 
-    private int _coinsCount = 700;
+    private int _coinsCount = 10000;
     [SerializeField]
     private int _meleeCost = 100;
     [SerializeField]
@@ -41,13 +41,32 @@ public class GameController : MonoBehaviour
         {
             Destroy(this);
         }
-
     }
 
     public void StartFight()
     {
         _isBattleStarted = true;
         ActivateCreatures();
+    }
+
+    private void Win()
+    {
+        _isBattleStarted = false;
+        UIManager.instance.Win();
+        PlayWinAnimation(_friendlyCreatures);
+    }
+
+    private void Lose()
+    {
+        _isBattleStarted = false;
+        UIManager.instance.Lose();
+        PlayWinAnimation(_enemyCreatures);
+    }
+
+    private void PlayWinAnimation(List<Creature> creatures)
+    {
+        foreach (Creature creature in creatures)
+            creature.Win();
     }
     void Update()
     {
@@ -60,10 +79,10 @@ public class GameController : MonoBehaviour
                         _creaturesToDestroy.Add(creature);
                 }
             else
-                UIManager.instance.Win();
+                Win();
             foreach (Creature creature in _creaturesToDestroy)
             {
-                Destroy(creature.gameObject);
+                creature.Die();
                 _enemyCreatures.Remove(creature);
             }
             _creaturesToDestroy.Clear();
@@ -75,10 +94,10 @@ public class GameController : MonoBehaviour
                         _creaturesToDestroy.Add(creature);
                 }
             else
-                UIManager.instance.Lose();
+                Lose();
             foreach (Creature creature in _creaturesToDestroy)
             {
-                Destroy(creature.gameObject);
+                creature.Die();
                 _friendlyCreatures.Remove(creature);
             }
             _creaturesToDestroy.Clear();

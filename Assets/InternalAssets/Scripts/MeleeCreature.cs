@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class MeleeCreature : Creature
 {
+    public enum SwordsmanOrSpearman { swordsman,spearman };
     public float speed = 5f;
     public float attackDistance = 1.5f;
+    public SwordsmanOrSpearman swordsmanOrSpearman;
 
-    // Update is called once per frame
+    private float _animationDelay = 0.5f;
+
+    private bool _inAnimationDelay = false;
     void Update()
     {
         elapsedtimeFromAttack += Time.deltaTime;
@@ -16,13 +20,16 @@ public class MeleeCreature : Creature
         else
         { 
             float dist = Vector3.Distance(transform.position, _closestEnemy.transform.position);
-            SetForwardToEnemy();
-            if (dist > attackDistance)
+            if (!_inAnimationDelay)
+                SetForwardToEnemy();
+            if (dist > attackDistance&&!_inAnimationDelay)
             {
                 transform.Translate(0, 0, speed * Time.deltaTime);
+                _animator.SetBool("Run",true);
             }
             else
             {
+                _animator.SetBool("Run", false);
                 if (CanAttack())
                     Attack();
             }
@@ -31,7 +38,38 @@ public class MeleeCreature : Creature
 
     private void Attack()
     {
-        _closestEnemy.hp -= damage;
+        if (swordsmanOrSpearman == SwordsmanOrSpearman.spearman)
+            _animator.SetTrigger("AttackSpear");
+        else
+        {
+            if (Random.Range(0, 2) == 0)
+                _animator.SetTrigger("AttackSword1");
+            else
+                _animator.SetTrigger("AttackSword2");
+        }
+        //StopAllCoroutines();
+        StartCoroutine(AnimationDelay());
+       // _closestEnemy.hp -= damage;
         elapsedtimeFromAttack = 0f;
+    }
+
+    private IEnumerator AnimationDelay()
+    {
+        _inAnimationDelay = true;
+        yield return new WaitForSeconds(_animationDelay);
+        _closestEnemy.hp -= damage;
+        _inAnimationDelay = false;
+    }
+
+    public void Die()
+    {
+        StartCoroutine(DieDelay());
+    }
+
+    private IEnumerator DieDelay()
+    {
+        _animator.SetTrigger("Die");
+        yield return new WaitForSeconds(0.3f);
+        Destroy(this.gameObject);
     }
 }

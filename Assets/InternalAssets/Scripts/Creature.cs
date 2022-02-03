@@ -15,9 +15,13 @@ public class Creature : MonoBehaviour
 
     protected float elapsedtimeFromAttack = 0f;
     protected Creature _closestEnemy = null;
+    protected Animator _animator;
 
+    private HPBar _hpBar;
     private void Start()
     {
+        _hpBar = GetComponentInChildren<HPBar>();
+        _animator = GetComponent<Animator>();
         elapsedtimeFromAttack = attackDelay;
     }
 
@@ -57,5 +61,21 @@ public class Creature : MonoBehaviour
             yield return null;
         }
         transform.rotation = endRot;
+    }
+    public void Die()
+    {
+        StartCoroutine(DieDelay());
+    }
+
+    public void Win()
+    {
+        _animator.SetBool("Win", true);
+    }
+    private IEnumerator DieDelay()
+    {
+        _hpBar.gameObject.SetActive(false);
+        _animator.SetTrigger("Die");
+        yield return new WaitForSeconds(1f);
+        Destroy(this.gameObject);
     }
 }

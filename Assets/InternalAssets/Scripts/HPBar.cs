@@ -6,12 +6,12 @@ public class HPBar : MonoBehaviour
 {
     [SerializeField]
     private Slider _hpBar;
-    [SerializeField]
     private Creature _creature;
 
     private int startHp;
     private void Start()
     {
+        _creature = transform.parent.GetComponent<Creature>();
         startHp = _creature.hp;
     }
     void Update()
