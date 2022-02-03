@@ -57,8 +57,8 @@ public class Selectable : MonoBehaviour
                 if (_creature.meleeOrRange == Creature.MeleeOrRange.melee)
                     creaturePrefab = GameController.instance.GetMeleeCreaturePrefab(_creature.level);
                 else creaturePrefab = GameController.instance.GetRangeCreaturePrefab(_creature.level);
-                
                 Creature newCreature = Instantiate(creaturePrefab, pos, Quaternion.identity);
+                GameController.instance.PlayMergeParticles(pos);
                 GameController.instance.MergeCreatures(newCreature, creature1, creature2);
                 if (creature1 == _creature)
                 {

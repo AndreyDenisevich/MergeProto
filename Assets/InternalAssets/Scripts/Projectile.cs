@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
         if(other.GetComponent<Creature>()==_enemy)
         {
             _enemy.hp -= _damage;
-            Destroy(this.gameObject);
+            _enemy.Hit();
         }
     }
 

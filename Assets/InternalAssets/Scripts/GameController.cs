@@ -10,6 +10,10 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private LeanPlane _plane;
+    [SerializeField]
+    private ParticleSystem _mergeParticles;
+    [SerializeField]
+    private ParticleSystem[] _confetties;
 
     [SerializeField]
     private Creature[] _meleeCreaturePrefabs;
@@ -54,6 +58,7 @@ public class GameController : MonoBehaviour
         _isBattleStarted = false;
         UIManager.instance.Win();
         PlayWinAnimation(_friendlyCreatures);
+        PlayConfetties();
     }
 
     private void Lose()
@@ -61,8 +66,16 @@ public class GameController : MonoBehaviour
         _isBattleStarted = false;
         UIManager.instance.Lose();
         PlayWinAnimation(_enemyCreatures);
+        PlayConfetties();
     }
 
+    private void PlayConfetties()
+    {
+        for(int i = 0;i<_confetties.Length;i++)
+        {
+            _confetties[i].gameObject.SetActive(true);
+        }
+    }
     private void PlayWinAnimation(List<Creature> creatures)
     {
         foreach (Creature creature in creatures)
@@ -179,7 +192,11 @@ public class GameController : MonoBehaviour
         _friendlyCreatures.Remove(creature2);
         _friendlyCreatures.Add(newCreature);
     }
-
+    public void PlayMergeParticles(Vector3 position)
+    {
+        _mergeParticles.transform.position = position;
+        _mergeParticles.Play();
+    }
     public Creature GetMeleeCreaturePrefab(int level)
     {
         return _meleeCreaturePrefabs[level];

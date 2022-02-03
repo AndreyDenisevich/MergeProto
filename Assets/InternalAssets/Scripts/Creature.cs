@@ -18,6 +18,10 @@ public class Creature : MonoBehaviour
     protected Animator _animator;
 
     private HPBar _hpBar;
+    [SerializeField]
+    private ParticleSystem _bloodParticles;
+    [SerializeField]
+    private ParticleSystem _dieBloodParticles;
     private void Start()
     {
         _hpBar = GetComponentInChildren<HPBar>();
@@ -35,9 +39,6 @@ public class Creature : MonoBehaviour
     protected void SetForwardToEnemy()
     {
         transform.forward = Vector3.Lerp(transform.forward, (_closestEnemy.transform.position - transform.position).normalized, 0.25f);
-        //float angle = Vector3.Angle(transform.forward, enemyForward); 
-        //StopAllCoroutines();
-        //StartCoroutine(SetForward(angle));
     }
 
     protected bool CanAttack()
@@ -71,8 +72,14 @@ public class Creature : MonoBehaviour
     {
         _animator.SetBool("Win", true);
     }
+
+    public void Hit()
+    {
+        _bloodParticles.Play();
+    }
     private IEnumerator DieDelay()
     {
+        _dieBloodParticles.Play();
         _hpBar.gameObject.SetActive(false);
         _animator.SetTrigger("Die");
         yield return new WaitForSeconds(1f);

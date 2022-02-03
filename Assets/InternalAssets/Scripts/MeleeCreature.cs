@@ -47,9 +47,7 @@ public class MeleeCreature : Creature
             else
                 _animator.SetTrigger("AttackSword2");
         }
-        //StopAllCoroutines();
         StartCoroutine(AnimationDelay());
-       // _closestEnemy.hp -= damage;
         elapsedtimeFromAttack = 0f;
     }
 
@@ -57,19 +55,8 @@ public class MeleeCreature : Creature
     {
         _inAnimationDelay = true;
         yield return new WaitForSeconds(_animationDelay);
+        _closestEnemy.Hit();
         _closestEnemy.hp -= damage;
         _inAnimationDelay = false;
-    }
-
-    public void Die()
-    {
-        StartCoroutine(DieDelay());
-    }
-
-    private IEnumerator DieDelay()
-    {
-        _animator.SetTrigger("Die");
-        yield return new WaitForSeconds(0.3f);
-        Destroy(this.gameObject);
     }
 }
