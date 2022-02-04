@@ -12,12 +12,12 @@ public class MeleeCreature : Creature
     private float _animationDelay = 0.5f;
 
     private bool _inAnimationDelay = false;
+
     void Update()
     {
         elapsedtimeFromAttack += Time.deltaTime;
-        if (!HaveEnemy())
-            FindClosestEnemy();
-        else
+        FindClosestEnemy();
+        if (HaveEnemy()&&!_isDead)    
         { 
             float dist = Vector3.Distance(transform.position, _closestEnemy.transform.position);
             if (!_inAnimationDelay)
@@ -55,8 +55,11 @@ public class MeleeCreature : Creature
     {
         _inAnimationDelay = true;
         yield return new WaitForSeconds(_animationDelay);
-        _closestEnemy.Hit();
-        _closestEnemy.hp -= damage;
+        if (_closestEnemy != null)
+        {
+            _closestEnemy.Hit();
+            _closestEnemy.hp -= damage;
+        }
         _inAnimationDelay = false;
     }
 }

@@ -179,10 +179,12 @@ public class GameController : MonoBehaviour
         foreach(Creature creature in _enemyCreatures)
         {
             creature.enabled = true;
+            creature.gameObject.layer = 0;
         }
         foreach (Creature creature in _friendlyCreatures)
         {
             creature.enabled = true;
+            creature.gameObject.layer = 0;
         }
     }
 

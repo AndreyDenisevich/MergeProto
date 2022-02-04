@@ -14,6 +14,7 @@ public class Creature : MonoBehaviour
     public MeleeOrRange meleeOrRange;
 
     protected float elapsedtimeFromAttack = 0f;
+    protected bool _isDead = false;
     protected Creature _closestEnemy = null;
     protected Animator _animator;
 
@@ -22,11 +23,20 @@ public class Creature : MonoBehaviour
     private ParticleSystem _bloodParticles;
     [SerializeField]
     private ParticleSystem _dieBloodParticles;
+
+    private Rigidbody _rb;
     private void Start()
     {
         _hpBar = GetComponentInChildren<HPBar>();
         _animator = GetComponent<Animator>();
         elapsedtimeFromAttack = attackDelay;
+        _rb = GetComponent<Rigidbody>();
+    }
+
+    private void FixedUpdate()
+    {
+        _rb.velocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
     }
 
     protected void FindClosestEnemy()
@@ -65,6 +75,8 @@ public class Creature : MonoBehaviour
     }
     public void Die()
     {
+        _isDead = true;
+        GetComponent<Collider>().enabled = false;
         StartCoroutine(DieDelay());
     }
 

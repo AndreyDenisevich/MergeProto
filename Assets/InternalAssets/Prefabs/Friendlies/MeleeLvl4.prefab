@@ -10402,6 +10402,7 @@ GameObject:
   - component: {fileID: 2033633245813224928}
   - component: {fileID: 2583739159306767241}
   - component: {fileID: 2668887823495748129}
+  - component: {fileID: 834911994730025081}
   m_Layer: 7
   m_Name: MeleeLvl4
   m_TagString: Untagged
@@ -10474,7 +10475,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &1841018949734834541
 MonoBehaviour:
@@ -10497,7 +10498,7 @@ MonoBehaviour:
   _bloodParticles: {fileID: 1815546063376853840}
   _dieBloodParticles: {fileID: 86309156969120456}
   speed: 5
-  attackDistance: 1.5
+  attackDistance: 2
   swordsmanOrSpearman: 0
 --- !u!114 &925497771177823364
 MonoBehaviour:
@@ -10632,6 +10633,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4cac4041e134d48abbacb87caefbc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &834911994730025081
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5816351287795692640}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.9058898
+  m_Height: 1.8851867
+  m_Direction: 1
+  m_Center: {x: 0.0000023897446, y: 0.93681884, z: -0.07925942}
 --- !u!1 &6693090400121478655
 GameObject:
   m_ObjectHideFlags: 0

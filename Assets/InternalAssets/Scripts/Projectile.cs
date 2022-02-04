@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         if (_enemy != null)
-            transform.forward = (_enemy.transform.position - transform.position).normalized;
+            transform.forward = (new Vector3(_enemy.transform.position.x,transform.position.y,_enemy.transform.position.z) - transform.position).normalized;
         else Destroy(this.gameObject);
         transform.Translate(0, 0, _speed * Time.deltaTime);
     }
@@ -28,6 +28,7 @@ public class Projectile : MonoBehaviour
         {
             _enemy.hp -= _damage;
             _enemy.Hit();
+            Destroy(this.gameObject);
         }
     }
 

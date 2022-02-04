@@ -12,9 +12,8 @@ public class RangeCreature : Creature
     void Update()
     {
         elapsedtimeFromAttack += Time.deltaTime;
-        if (!HaveEnemy())
-            FindClosestEnemy();
-        else
+        FindClosestEnemy();
+        if (HaveEnemy()&&!_isDead)  
         {
             SetForwardToEnemy();
             if (CanAttack())
@@ -24,10 +23,6 @@ public class RangeCreature : Creature
 
     private void Attack()
     {
-        //_animator.SetTrigger("Attack");
-        //Projectile newProjectile = Instantiate(_projectilePrefab, transform.position, transform.rotation);
-        //newProjectile.damage = damage;
-        //newProjectile.enemy = _closestEnemy;
         StartCoroutine(AnimationDelay());
         elapsedtimeFromAttack = 0f;
     }
