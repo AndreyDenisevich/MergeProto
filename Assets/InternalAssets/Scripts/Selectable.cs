@@ -41,6 +41,15 @@ public class Selectable : MonoBehaviour
         CheckCreaturesOnPoint(transform.position);
     }
 
+    public void Disable()
+    {
+        LeanConstrainToAxis[] _constraints = GetComponents<LeanConstrainToAxis>();
+        for (int i = 0; i < _constraints.Length; i++)
+            _constraints[i].enabled = false;
+        GetComponent<LeanSelectableByFinger>().enabled = false;
+        GetComponent<LeanDragTranslate>().enabled = false;
+        this.enabled = false;
+    }
     private void CheckCreaturesOnPoint(Vector3 pos)
     {
         Vector2 snap = GameController.instance.GetGridSnap();

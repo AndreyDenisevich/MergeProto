@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private LeanPlane _plane;
     [SerializeField]
+    private GameObject _grid;
+    [SerializeField]
     private ParticleSystem _mergeParticles;
     [SerializeField]
     private ParticleSystem[] _confetties;
@@ -51,6 +53,7 @@ public class GameController : MonoBehaviour
     public void StartFight()
     {
         _isBattleStarted = true;
+        _grid.SetActive(false);
         ActivateCreatures();
     }
 
@@ -197,6 +200,7 @@ public class GameController : MonoBehaviour
         }
         foreach (Creature creature in _friendlyCreatures)
         {
+            creature.GetComponent<Selectable>().Disable();
             creature.enabled = true;
             creature.gameObject.layer = 0;
         }

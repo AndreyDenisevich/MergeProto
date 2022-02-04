@@ -16,7 +16,8 @@ public class MeleeCreature : Creature
     void Update()
     {
         elapsedtimeFromAttack += Time.deltaTime;
-        FindClosestEnemy();
+        if (!_inAnimationDelay)
+            FindClosestEnemy();
         if (HaveEnemy()&&!_isDead)    
         { 
             float dist = Vector3.Distance(transform.position, _closestEnemy.transform.position);
@@ -53,8 +54,8 @@ public class MeleeCreature : Creature
 
     private IEnumerator AnimationDelay()
     {
-        yield return new WaitForSeconds(Random.Range(0f,0.5f));
         _inAnimationDelay = true;
+        yield return new WaitForSeconds(Random.Range(0f,0.5f));
         if (swordsmanOrSpearman == SwordsmanOrSpearman.spearman)
             _animator.SetTrigger("AttackSpear");
         else

@@ -15154,8 +15154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relativeTo: {fileID: 0}
   axis: 0
-  minimum: -5
-  maximum: 5
+  minimum: -6.25
+  maximum: 6.25
 --- !u!114 &6859095872767275936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15170,8 +15170,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relativeTo: {fileID: 0}
   axis: 2
-  minimum: -5
-  maximum: 5
+  minimum: -8.25
+  maximum: -1.25
 --- !u!114 &6859095872767275951
 MonoBehaviour:
   m_ObjectHideFlags: 0
