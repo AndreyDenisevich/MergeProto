@@ -38,6 +38,23 @@ public class MeleeCreature : Creature
 
     private void Attack()
     {
+        //if (swordsmanOrSpearman == SwordsmanOrSpearman.spearman)
+        //    _animator.SetTrigger("AttackSpear");
+        //else
+        //{
+        //    if (Random.Range(0, 2) == 0)
+        //        _animator.SetTrigger("AttackSword1");
+        //    else
+        //        _animator.SetTrigger("AttackSword2");
+        //}
+        StartCoroutine(AnimationDelay());
+        elapsedtimeFromAttack = 0f;
+    }
+
+    private IEnumerator AnimationDelay()
+    {
+        yield return new WaitForSeconds(Random.Range(0f,0.5f));
+        _inAnimationDelay = true;
         if (swordsmanOrSpearman == SwordsmanOrSpearman.spearman)
             _animator.SetTrigger("AttackSpear");
         else
@@ -47,13 +64,6 @@ public class MeleeCreature : Creature
             else
                 _animator.SetTrigger("AttackSword2");
         }
-        StartCoroutine(AnimationDelay());
-        elapsedtimeFromAttack = 0f;
-    }
-
-    private IEnumerator AnimationDelay()
-    {
-        _inAnimationDelay = true;
         yield return new WaitForSeconds(_animationDelay);
         if (_closestEnemy != null)
         {

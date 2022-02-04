@@ -45,6 +45,7 @@ public class GameController : MonoBehaviour
         {
             Destroy(this);
         }
+        ActivateAnimators();
     }
 
     public void StartFight()
@@ -53,6 +54,19 @@ public class GameController : MonoBehaviour
         ActivateCreatures();
     }
 
+    private void ActivateAnimators()
+    {
+        foreach(Creature creature in _enemyCreatures)
+        {
+            StartCoroutine(RandomDelayForAnimator(creature.GetComponent<Animator>()));
+        }
+    }
+
+    private IEnumerator RandomDelayForAnimator(Animator animator)
+    {
+        yield return new WaitForSeconds(Random.Range(0f, 1f));
+        animator.enabled = true;
+    }
     private void Win()
     {
         _isBattleStarted = false;

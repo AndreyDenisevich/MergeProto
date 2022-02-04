@@ -28,7 +28,7 @@ public class RangeCreature : Creature
     }
     private IEnumerator AnimationDelay()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(Random.Range(0f, 0.5f));
         _animator.SetTrigger("Attack");
         Projectile newProjectile = Instantiate(_projectilePrefab, _projectileSpawnPoint.position, transform.rotation);
         newProjectile.damage = damage;

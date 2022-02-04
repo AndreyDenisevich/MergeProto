@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _finalText;
     [SerializeField]
+    private TextMeshProUGUI _levelText;
+    [SerializeField]
     private Text _coinsCount;
     [SerializeField]
     private Text _meleeCost;
@@ -67,6 +69,7 @@ public class UIManager : MonoBehaviour
 
     public void FightStarted()
     {
+        _levelText.gameObject.SetActive(false);
         _startFightButton.gameObject.SetActive(false);
         _buyMeleeButton.gameObject.SetActive(false);
         _buyRangeButton.gameObject.SetActive(false);
