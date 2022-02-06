@@ -25,7 +25,7 @@ public class Creature : MonoBehaviour
     private ParticleSystem _dieBloodParticles;
 
     private Rigidbody _rb;
-    private void Start()
+    private void Awake()
     {
         _hpBar = GetComponentInChildren<HPBar>();
         _animator = GetComponent<Animator>();
@@ -33,7 +33,7 @@ public class Creature : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
+    protected void ZeroVelocity()
     {
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
@@ -96,5 +96,16 @@ public class Creature : MonoBehaviour
         _animator.SetTrigger("Die");
         yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
+    }
+    public Rigidbody rb
+    {
+        get
+        {
+            return _rb;
+        }
+        set
+        {
+            _rb = value;
+        }
     }
 }

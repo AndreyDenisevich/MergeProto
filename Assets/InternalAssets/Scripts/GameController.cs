@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance = null;
 
+    [Header("GamController")]
     [SerializeField]
     private LeanPlane _plane;
     [SerializeField]
@@ -197,12 +198,14 @@ public class GameController : MonoBehaviour
         {
             creature.enabled = true;
             creature.gameObject.layer = 0;
+            creature.rb.mass = _friendlyCreatures.Count;
         }
         foreach (Creature creature in _friendlyCreatures)
         {
             creature.GetComponent<Selectable>().Disable();
             creature.enabled = true;
             creature.gameObject.layer = 0;
+            creature.rb.mass = _enemyCreatures.Count;
         }
     }
 

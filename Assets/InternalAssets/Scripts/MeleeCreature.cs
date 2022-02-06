@@ -18,15 +18,36 @@ public class MeleeCreature : Creature
         elapsedtimeFromAttack += Time.deltaTime;
         if (!_inAnimationDelay)
             FindClosestEnemy();
-        if (HaveEnemy()&&!_isDead)    
-        { 
+        //if (HaveEnemy() && !_isDead)
+        //{
+        //    float dist = Vector3.Distance(transform.position, _closestEnemy.transform.position);
+        //    if (!_inAnimationDelay)
+        //        SetForwardToEnemy();
+        //    if (dist > attackDistance && !_inAnimationDelay)
+        //    {
+        //        transform.Translate(0, 0, speed * Time.deltaTime);
+        //        _animator.SetBool("Run", true);
+        //    }
+        //    else
+        //    {
+        //        _animator.SetBool("Run", false);
+        //        if (CanAttack())
+        //            Attack();
+        //    }
+        //}
+    }
+    private void FixedUpdate()
+    {
+        ZeroVelocity();
+        if (HaveEnemy() && !_isDead)
+        {
             float dist = Vector3.Distance(transform.position, _closestEnemy.transform.position);
             if (!_inAnimationDelay)
                 SetForwardToEnemy();
-            if (dist > attackDistance&&!_inAnimationDelay)
+            if (dist > attackDistance && !_inAnimationDelay)
             {
-                transform.Translate(0, 0, speed * Time.deltaTime);
-                _animator.SetBool("Run",true);
+                transform.Translate(0, 0, speed * Time.fixedDeltaTime);
+                _animator.SetBool("Run", true);
             }
             else
             {
@@ -35,6 +56,7 @@ public class MeleeCreature : Creature
                     Attack();
             }
         }
+        
     }
 
     private void Attack()
