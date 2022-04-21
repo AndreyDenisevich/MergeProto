@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Lean.Touch;
 using Lean.Common;
+using Zenject;
 
 public class GameController : MonoBehaviour
 {
-    public static GameController instance = null;
+    [Inject]
+    private UIManager _uiManager;
 
-    [Header("GamController")]
+    private DiContainer _container;
+
+    [Header("GameController")]
     [SerializeField]
     private LeanPlane _plane;
     [SerializeField]
@@ -39,15 +43,6 @@ public class GameController : MonoBehaviour
     private int _rangeCost = 100;
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this);
-        }
         ActivateAnimators();
     }
 
@@ -74,7 +69,7 @@ public class GameController : MonoBehaviour
     private void Win()
     {
         _isBattleStarted = false;
-        UIManager.instance.Win();
+        _uiManager.Win();
         PlayWinAnimation(_friendlyCreatures);
         PlayConfetties();
     }
@@ -82,7 +77,7 @@ public class GameController : MonoBehaviour
     private void Lose()
     {
         _isBattleStarted = false;
-        UIManager.instance.Lose();
+        _uiManager.Lose();
         PlayWinAnimation(_enemyCreatures);
         PlayConfetties();
     }
@@ -142,7 +137,9 @@ public class GameController : MonoBehaviour
             Vector3 freePos;
             if (FindFreePosition(out freePos))
             {
-                Creature creature = Instantiate(_meleeCreaturePrefabs[0], freePos, Quaternion.identity);
+                Creature creature = _container.InstantiatePrefab(_meleeCreaturePrefabs[0]).GetComponent<Creature>();
+                creature.transform.position = freePos;
+                creature.transform.rotation = Quaternion.identity;
                 _friendlyCreatures.Add(creature);
             }
             _coinsCount -= _meleeCost;
@@ -157,14 +154,15 @@ public class GameController : MonoBehaviour
             Vector3 freePos;
             if (FindFreePosition(out freePos))
             {
-                Creature creature = Instantiate(_rangeCreaturePrefabs[0], freePos, Quaternion.identity);
+                Creature creature = _container.InstantiatePrefab(_rangeCreaturePrefabs[0]).GetComponent<Creature>();
+                creature.transform.position = freePos;
+                creature.transform.rotation = Quaternion.identity;
                 _friendlyCreatures.Add(creature);
             }
             _coinsCount -= _rangeCost;
             _rangeCost += 10;
         }
     }
-
     private bool FindFreePosition(out Vector3 pos)
     {
         bool isAnyFree = false;
@@ -209,10 +207,13 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void MergeCreatures(Creature newCreature,Creature creature1,Creature creature2)
+    public void MergeCreatures(Creature newCreaturePrefab,Vector3 pos,Creature creature1,Creature creature2)
     {
         _friendlyCreatures.Remove(creature1);
         _friendlyCreatures.Remove(creature2);
+        Creature newCreature = _container.InstantiatePrefab(newCreaturePrefab).GetComponent<Creature>();
+        newCreature.transform.position = pos;
+        newCreature.transform.rotation = Quaternion.identity;
         _friendlyCreatures.Add(newCreature);
     }
     public void PlayMergeParticles(Vector3 position)
@@ -286,6 +287,14 @@ public class GameController : MonoBehaviour
         get
         {
             return _rangeCost;
+        }
+    }
+
+    public DiContainer container
+    {
+        set
+        {
+            _container = value;
         }
     }
 }

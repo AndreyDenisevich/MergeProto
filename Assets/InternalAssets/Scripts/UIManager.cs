@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Zenject;
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance = null;
+    [Inject]
+    private GameController _gameController;
 
     [SerializeField]
     private TextMeshProUGUI _finalText;
@@ -14,9 +16,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _coinsCount;
     [SerializeField]
-    private Text _meleeCost;
+    private TextMeshProUGUI _meleeCost;
     [SerializeField]
-    private Text _rangeCost;
+    private TextMeshProUGUI _rangeCost;
     [SerializeField]
     private Button _buyMeleeButton;
     [SerializeField]
@@ -25,15 +27,6 @@ public class UIManager : MonoBehaviour
     private Button _startFightButton;
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this);
-        }
         UpdateCoins();
     }
     void Update()
@@ -54,17 +47,17 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateCoins()
     {
-        _coinsCount.text = GameController.instance.coins.ToString();
+        _coinsCount.text = _gameController.coins.ToString();
     }
 
     public void UpdateMeleeCost()
     {
-        _meleeCost.text = GameController.instance.meleeCost.ToString();
+        _meleeCost.text = _gameController.meleeCost.ToString();
     }
 
     public void UpdateRangeCost()
     {
-        _rangeCost.text = GameController.instance.rangeCost.ToString();
+        _rangeCost.text = _gameController.rangeCost.ToString();
     }
 
     public void FightStarted()

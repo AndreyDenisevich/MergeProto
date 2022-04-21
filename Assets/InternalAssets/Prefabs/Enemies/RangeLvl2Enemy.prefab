@@ -10414,6 +10414,7 @@ MonoBehaviour:
   _dieBloodParticles: {fileID: 5737809276626042613}
   _projectilePrefab: {fileID: 6019662701889727757, guid: 7446daef455bda546bd5ebc4755994ed, type: 3}
   _projectileSpawnPoint: {fileID: 3498978012081605677}
+  type: 1
 --- !u!1 &7074699731632896471
 GameObject:
   m_ObjectHideFlags: 0

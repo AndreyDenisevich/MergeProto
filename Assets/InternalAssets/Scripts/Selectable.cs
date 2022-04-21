@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Lean.Touch;
 using Lean.Common;
+using Zenject;
 
 [RequireComponent(typeof(LeanDragTranslate))]
 [RequireComponent(typeof(LeanSelectableByFinger))]
@@ -10,6 +11,9 @@ using Lean.Common;
 [RequireComponent(typeof(Creature))]
 public class Selectable : MonoBehaviour
 {
+    [Inject]
+    private GameController _gameController;
+
     private Collider _collider;
     private Vector3 _posBeforeDrag;
     private Creature _creature;
@@ -27,7 +31,7 @@ public class Selectable : MonoBehaviour
 
     private void SetClosestPos()
     {
-        transform.position = GameController.instance.GetClosestPos(transform.position);
+        transform.position = _gameController.GetClosestPos(transform.position);
     }
 
     public void Selected()
@@ -52,7 +56,7 @@ public class Selectable : MonoBehaviour
     }
     private void CheckCreaturesOnPoint(Vector3 pos)
     {
-        Vector2 snap = GameController.instance.GetGridSnap();
+        Vector2 snap = _gameController.GetGridSnap();
         RaycastHit[] hits = Physics.BoxCastAll(pos,new Vector3 (snap.x / 2f,0f, snap.y / 2f), Vector3.forward, Quaternion.Euler(0, 0, 0),0);
         if(hits.Length>1)
         {
@@ -64,11 +68,10 @@ public class Selectable : MonoBehaviour
             {
                 Creature creaturePrefab;
                 if (_creature.meleeOrRange == Creature.MeleeOrRange.melee)
-                    creaturePrefab = GameController.instance.GetMeleeCreaturePrefab(_creature.level);
-                else creaturePrefab = GameController.instance.GetRangeCreaturePrefab(_creature.level);
-                Creature newCreature = Instantiate(creaturePrefab, pos, Quaternion.identity);
-                GameController.instance.PlayMergeParticles(pos);
-                GameController.instance.MergeCreatures(newCreature, creature1, creature2);
+                    creaturePrefab = _gameController.GetMeleeCreaturePrefab(_creature.level);
+                else creaturePrefab = _gameController.GetRangeCreaturePrefab(_creature.level);
+                _gameController.PlayMergeParticles(pos);
+                _gameController.MergeCreatures(creaturePrefab, pos, creature1, creature2);
                 if (creature1 == _creature)
                 {
                     Destroy(creature2.gameObject);

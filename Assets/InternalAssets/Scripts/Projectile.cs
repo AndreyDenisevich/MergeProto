@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
     private int _damage = 30;
     
     private Creature _enemy;
+    private ObjectPool _connectedPool;
     void Start()
     {
         
@@ -17,8 +18,8 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         if (_enemy != null)
-            transform.forward = (new Vector3(_enemy.transform.position.x,transform.position.y,_enemy.transform.position.z) - transform.position).normalized;
-        else Destroy(this.gameObject);
+            transform.forward = (new Vector3(_enemy.transform.position.x, transform.position.y, _enemy.transform.position.z) - transform.position).normalized;
+        else _connectedPool.ReturnObjectToPool(this);
         transform.Translate(0, 0, _speed * Time.deltaTime);
     }
 
@@ -28,7 +29,7 @@ public class Projectile : MonoBehaviour
         {
             _enemy.hp -= _damage;
             _enemy.Hit();
-            Destroy(this.gameObject);
+            _connectedPool.ReturnObjectToPool(this);
         }
     }
 
@@ -44,6 +45,13 @@ public class Projectile : MonoBehaviour
         set
         {
             _enemy = value;
+        }
+    }
+    public ObjectPool connectedPool
+    {
+        set
+        {
+            _connectedPool = value;
         }
     }
 }

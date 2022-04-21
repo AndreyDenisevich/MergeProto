@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Creature : MonoBehaviour
 {
-    public enum EnemyOrFriendly { friendly,enemy}
+    [Inject]
+    private GameController _gameController;
+
+    public enum EnemyOrFriendly { friendly,enemy }
     public enum MeleeOrRange { melee,range}
     public int level = 1;
     public int hp = 100;
@@ -42,8 +46,8 @@ public class Creature : MonoBehaviour
     protected void FindClosestEnemy()
     {
             if (enemyOrFriendly == EnemyOrFriendly.friendly)
-                _closestEnemy = GameController.instance.GetClosestEnemy(transform.position);
-            else _closestEnemy = GameController.instance.GetClosestFriendly(transform.position);
+                _closestEnemy = _gameController.GetClosestEnemy(transform.position);
+            else _closestEnemy = _gameController.GetClosestFriendly(transform.position);
     }
 
     protected void SetForwardToEnemy()
