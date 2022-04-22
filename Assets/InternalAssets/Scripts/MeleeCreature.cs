@@ -11,12 +11,12 @@ public class MeleeCreature : Creature
 
     private float _animationDelay = 0.5f;
 
-    private bool _inAnimationDelay = false;
+    private bool _inAttack = false;
 
     void Update()
     {
         elapsedtimeFromAttack += Time.deltaTime;
-        if (!_inAnimationDelay)
+        if (!_inAttack)
             FindClosestEnemy();
     }
     private void FixedUpdate()
@@ -25,9 +25,9 @@ public class MeleeCreature : Creature
         if (HaveEnemy() && !_isDead)
         {
             float dist = Vector3.Distance(transform.position, _closestEnemy.transform.position);
-            if (!_inAnimationDelay)
+            if (!_inAttack)
                 SetForwardToEnemy();
-            if (dist > attackDistance && !_inAnimationDelay)
+            if (dist > attackDistance && !_inAttack)
             {
                 transform.Translate(0, 0, speed * Time.fixedDeltaTime);
                 _animator.SetBool("Run", true);
@@ -44,13 +44,13 @@ public class MeleeCreature : Creature
 
     private void Attack()
     {
-        StartCoroutine(AnimationDelay());
+        StartCoroutine(AttackDelay());
         elapsedtimeFromAttack = 0f;
     }
 
-    private IEnumerator AnimationDelay()
+    private IEnumerator AttackDelay()
     {
-        _inAnimationDelay = true;
+        _inAttack = true;
         yield return new WaitForSeconds(Random.Range(0f,0.5f));
         if (swordsmanOrSpearman == SwordsmanOrSpearman.spearman)
             _animator.SetTrigger("AttackSpear");
@@ -67,6 +67,6 @@ public class MeleeCreature : Creature
             _closestEnemy.Hit();
             _closestEnemy.hp -= damage;
         }
-        _inAnimationDelay = false;
+        _inAttack = false;
     }
 }

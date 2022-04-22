@@ -29,7 +29,7 @@ public class Creature : MonoBehaviour
     private ParticleSystem _dieBloodParticles;
 
     private Rigidbody _rb;
-    private void Awake()
+    private void Start()
     {
         _hpBar = GetComponentInChildren<HPBar>();
         _animator = GetComponent<Animator>();
@@ -52,7 +52,8 @@ public class Creature : MonoBehaviour
 
     protected void SetForwardToEnemy()
     {
-        transform.forward = Vector3.Lerp(transform.forward, (_closestEnemy.transform.position - transform.position).normalized, 0.25f);
+        transform.forward = Vector3.Lerp(transform.forward,
+            (_closestEnemy.transform.position - transform.position).normalized, 0.25f);
     }
 
     protected bool CanAttack()

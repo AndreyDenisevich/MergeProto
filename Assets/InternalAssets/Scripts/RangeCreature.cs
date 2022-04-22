@@ -16,7 +16,7 @@ public class RangeCreature : Creature
 
     private ObjectPool _connectedPool;
 
-    private void Start()
+    private void Awake()
     {
         _connectedPool = _poolManager.GetPool(type);
     }
@@ -34,10 +34,10 @@ public class RangeCreature : Creature
 
     private void Attack()
     {
-        StartCoroutine(AnimationDelay());
+        StartCoroutine(AttackDelay());
         elapsedtimeFromAttack = 0f;
     }
-    private IEnumerator AnimationDelay()
+    private IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(Random.Range(0f, 0.5f));
         _animator.SetTrigger("Attack");

@@ -236,7 +236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &608205930023438651
 Transform:
   m_ObjectHideFlags: 0
@@ -10334,8 +10334,8 @@ MonoBehaviour:
   meleeOrRange: 1
   _bloodParticles: {fileID: 8584760427112325513}
   _dieBloodParticles: {fileID: 1715249797980832300}
-  _projectilePrefab: {fileID: 2091542747783694166, guid: 9492ff4952c3d574185894233001a7c7, type: 3}
   _projectileSpawnPoint: {fileID: 2575766478479296342}
+  type: 0
 --- !u!114 &7446491503186401813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10846,7 +10846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4633844020679552319
 Transform:
   m_ObjectHideFlags: 0

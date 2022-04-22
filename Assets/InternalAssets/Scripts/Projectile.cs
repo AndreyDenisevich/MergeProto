@@ -9,16 +9,13 @@ public class Projectile : MonoBehaviour
     
     private Creature _enemy;
     private ObjectPool _connectedPool;
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         if (_enemy != null)
-            transform.forward = (new Vector3(_enemy.transform.position.x, transform.position.y, _enemy.transform.position.z) - transform.position).normalized;
+            transform.forward = (new Vector3(_enemy.transform.position.x,
+                transform.position.y,
+                _enemy.transform.position.z) - transform.position).normalized;
         else _connectedPool.ReturnObjectToPool(this);
         transform.Translate(0, 0, _speed * Time.deltaTime);
     }

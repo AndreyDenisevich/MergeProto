@@ -19,8 +19,6 @@ public class GameController : MonoBehaviour
     private GameObject _grid;
     [SerializeField]
     private ParticleSystem _mergeParticles;
-    [SerializeField]
-    private ParticleSystem[] _confetties;
 
     [SerializeField]
     private Creature[] _meleeCreaturePrefabs;
@@ -70,24 +68,12 @@ public class GameController : MonoBehaviour
     {
         _isBattleStarted = false;
         _uiManager.Win();
-        PlayWinAnimation(_friendlyCreatures);
-        PlayConfetties();
     }
 
     private void Lose()
     {
         _isBattleStarted = false;
         _uiManager.Lose();
-        PlayWinAnimation(_enemyCreatures);
-        PlayConfetties();
-    }
-
-    private void PlayConfetties()
-    {
-        for(int i = 0;i<_confetties.Length;i++)
-        {
-            _confetties[i].gameObject.SetActive(true);
-        }
     }
     private void PlayWinAnimation(List<Creature> creatures)
     {
