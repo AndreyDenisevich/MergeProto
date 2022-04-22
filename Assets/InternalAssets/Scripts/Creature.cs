@@ -29,7 +29,7 @@ public class Creature : MonoBehaviour
     private ParticleSystem _dieBloodParticles;
 
     private Rigidbody _rb;
-    private void Start()
+    private void Awake()
     {
         _hpBar = GetComponentInChildren<HPBar>();
         _animator = GetComponent<Animator>();

@@ -16,7 +16,7 @@ public class RangeCreature : Creature
 
     private ObjectPool _connectedPool;
 
-    private void Awake()
+    private void Start()
     {
         _connectedPool = _poolManager.GetPool(type);
     }
